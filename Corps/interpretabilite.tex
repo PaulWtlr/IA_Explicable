@@ -1,0 +1,137 @@
+\setlength{\parindent}{0}
+
+\section{Interpretabilité}
+
+
+Il n'existe pas de définition mathématique de l'interprétabilité. Une définition (non-mathématique) pourrait être : 
+L'interprétabilité est le degré auquel un humain peut comprendre la cause d'une décision.
+
+\subsection{Importance de l'Interprétabilité :}
+
+Les gens veulent savoir pourquoi une prédiction a été faite et sont possiblement prêts à payer pour l'interprétabilité même si cela entraîne une baisse de la performance prédictive.
+\begin{itemize}
+    \item
+     \textbf{Pour corriger les cas particuliers :} Les modèles d'apprentissage automatique prennent en charge des tâches du monde réel qui nécessitent des mesures de sécurité et des tests. Imaginez une voiture autonome détectant automatiquement les cyclistes grâce à un système d'apprentissage profond. Vous voulez être sûr à 100\% que l'abstraction que le système a apprise est sans erreur, car renverser un cycliste est très grave. Une explication pourrait révéler que la caractéristique la plus importante apprise est de reconnaître les deux roues d'un vélo. Cette explication aide alors à penser aux cas particuliers, comme celui des vélos avec des sacoches qui couvrent partiellement les roues.    
+     \item
+     \textbf{Pour détecter les biais :} Les modèles d'apprentissage automatique acquièrent des biais à partir des données d'entraînement. Cela peut transformer vos modèles en systèmes discriminatoires envers certains groupes. L'interprétabilité est un outil de débogage utile pour détecter le biais dans les modèles d'apprentissage automatique.
+\end{itemize}
+
+L'interprétabilité d'un modèle vous aide également beaucoup à mesurer les traits suivants :
+\begin{itemize}
+
+    \item
+    \textbf{Équité :} Veiller à ce que les prédictions soient impartiales et ne discriminent pas, implicitement ou explicitement, contre des groupes protégés. Un modèle interprétable peut vous dire pourquoi il a décidé qu'une certaine personne ne devrait pas obtenir un prêt, ce qui facilite la tâche de l'humain pour juger si la décision est basée sur un biais démographique (par exemple racial) appris.
+
+    \item
+    \textbf{Confidentialité :} Veiller à ce que les informations sensibles dans les données soient protégées.
+
+    \item
+    \textbf{Fiabilité ou Robustesse :} Veiller à ce que de petits changements dans l'entrée n'entraînent pas de grands changements dans la prédiction.
+
+    \item
+    \textbf{Causalité :} Vérifier que seules les relations causales sont prises en compte.
+
+    \item
+    \textbf{Confiance :} Il est plus facile pour les humains de faire confiance à un système qui explique ses décisions par rapport à une boîte noire.
+
+\end{itemize}
+
+\subsection{Taxonomie des méthodes d'interprétabilité}
+
+\begin{itemize}
+    \item
+    \textbf{Interprétabilité Intrinsèque :} Elle fait référence aux modèles d'apprentissage automatique qui sont considérés comme interprétables en raison de leur structure simple, tels que les arbres de décision courts ou les modèles linéaires parcimonieux. 
+
+    \item
+    \textbf{Interprétabilité Post hoc :} Elle fait référence à l'application de méthodes d'interprétation après la formation du modèle. L'importance des variables par permutation (Permutation feature importance) est, par exemple, une méthode d'interprétation post hoc. Les méthodes post hoc peuvent également être appliquées à des modèles intrinsèquement interprétables.
+\end{itemize}
+
+Les différentes méthodes d'interprétation peuvent être grossièrement différenciées selon leurs résultats :
+
+\begin{itemize}
+    \item
+    \textbf{Statistique Sommaire des Variables :} Comme l'importance des variables, ou un résultat plus complexe, comme les forces d'interaction entre paires de variables.
+
+    \item
+    \textbf{Visualisation Sommaire des variables :} La plupart des statistiques sommaires des variables peuvent également être visualisées. Certaines synthèses de variables ne sont réellement significatives que si elles sont visualisées, et un tableau serait un mauvais choix. La dépendance partielle d'une caractéristique est un tel cas.
+
+    \item
+    \textbf{Internes du Modèle (par exemple, poids appris) :} L'interprétation de modèles intrinsèquement interprétables entre dans cette catégorie. Les exemples sont les poids dans les modèles linéaires ou la structure d'arbre apprise (les variables et les seuils utilisés pour les divisions) des arbres de décision.
+
+    \item
+    \textbf{Data point :} Cette catégorie comprend toutes les méthodes qui renvoient des points de données (déjà existants ou nouvellement créés) pour rendre un modèle interprétable. Pour expliquer la prédiction d'une instance de données, la méthode trouve un point de données similaire en modifiant certaines des variables pour lesquelles le résultat prédit change de manière pertinente (par exemple, un basculement dans la classe prédite).
+
+    \item
+    \textbf{Modèle Intrinsèquement Interprétable :} Une solution pour interpréter les modèles boîte noire est de les approximer (soit globalement, soit localement) avec un modèle interprétable.
+    
+\end{itemize}
+
+\subsection{Portée de l'Interprétabilité}
+
+\begin{itemize}
+    
+    \item \textbf{Transparence de l'algorithme :} Comment l'algorithme apprend un modèle à partir des données. Cet article se concentre sur l'interprétabilité du modèle et non sur la transparence de l'algorithme.
+    
+    \item \textbf{Interprétabilité globale et holistique du modèle :} On pourrait décrire un modèle comme étant interprétable si l'on peut comprendre le modèle entier en une fois (Lipton 2016). Pour expliquer la sortie globale du modèle, vous avez besoin du modèle formé, de la connaissance de l'algorithme et des données. Ce niveau d'interprétabilité concerne la compréhension de la façon dont le modèle prend des décisions, en se basant sur une vision holistique de ses caractéristiques et de chacune des composantes apprises telles que les poids, d'autres paramètres, et structures. Quelles caractéristiques sont importantes et quel type d'interactions entre elles se produit ? L'interprétabilité globale du modèle aide à comprendre la distribution de votre résultat cible en fonction des caractéristiques.
+    
+    \item \textbf{Interprétabilité globale du modèle à un niveau modulaire :} Il est facile de comprendre un seul poids. Bien que l'interprétabilité globale du modèle soit généralement hors de portée, il y a de bonnes chances de comprendre au moins certains modèles à un niveau modulaire. Tous les modèles ne sont pas interprétables à un niveau de paramètre. Pour les modèles linéaires, les parties interprétables sont les poids, pour les arbres ce seraient les divisions (caractéristiques sélectionnées plus points de coupure) et les prédictions des nœuds feuilles. Les modèles linéaires, par exemple, semblent pouvoir être parfaitement interprétés à un niveau modulaire, mais l'interprétation d'un seul poids est verrouillée avec tous les autres poids. L'interprétation d'un seul poids vient toujours avec la note de bas de page que les autres caractéristiques d'entrée restent à la même valeur, ce qui n'est pas le cas avec de nombreuses applications réelles.
+    
+    \item \textbf{Interprétabilité locale pour une prédiction unique :} Vous pouvez vous concentrer sur une seule instance. Localement, la prédiction peut dépendre uniquement de manière linéaire ou monotone de certaines caractéristiques, plutôt que d'avoir une dépendance complexe à leur égard. Les explications locales peuvent donc être plus précises que les explications globales. Par exemple, la valeur d'une maison peut dépendre de manière non linéaire de sa taille. Mais si vous ne regardez qu'une maison particulière de 100 mètres carrés, il est possible que, pour ce sous-ensemble de données, votre prédiction de modèle dépende linéairement de la taille.
+    
+    \item \textbf{Interprétabilité Locale pour un groupe de prédictions :} Les méthodes d'explication individuelles peuvent être utilisées sur chaque instance, puis listées ou agrégées pour l'ensemble du groupe.
+
+\end{itemize}
+
+\subsection{Évaluation de l'Interprétabilité :}
+
+Doshi-Velez et Kim (2017) proposent trois niveaux principaux pour l'évaluation de l'interprétabilité:
+
+\begin{itemize}
+    
+    \item \textbf{Évaluation au Niveau de l'Application (tâche réelle) :} Intégrez l'explication dans le produit et faites-la tester par l'utilisateur final. Une bonne référence pour cela est toujours de savoir à quel point un humain serait bon pour expliquer la même décision.
+    
+    \item \textbf{Évaluation au Niveau Humain (tâche simple) :} Il s'agit d'une évaluation simplifiée du niveau d'application. La différence est que ces expériences ne sont pas menées avec des experts du domaine, mais avec des personnes profanes.
+    
+    \item \textbf{Évaluation au Niveau de la Fonction (tâche proxy) :} Cela ne nécessite pas la participation des humains. Par exemple, il se pourrait que l'on sache que les utilisateurs finaux comprennent les arbres de décision. Dans ce cas, un substitut pour la qualité de l'explication pourrait être la profondeur de l'arbre.
+    
+\end{itemize}
+
+\subsection{Propriétés des Explications :}
+
+Une explication relie généralement les valeurs des variables d'une instance à sa prédiction de modèle de manière compréhensible pour l'humain.
+
+\textbf{Propriétés des Méthodes d'Explication :}
+\begin{itemize}
+   \item Pouvoir Expressif
+   \item Transparence (décrit à quel point la méthode d'explication repose sur l'examen du modèle d'apprentissage automatique, comme ses paramètres)
+   \item Portabilité (décrit la gamme de modèles d'apprentissage automatique avec lesquels la méthode d'explication peut être utilisée)
+   \item Complexité Algorithmique
+\end{itemize}
+
+\subsection{Propriétés des Explications Individuelles :}
+
+\begin{itemize}
+   \item Précision (À quel point une explication prédit-elle bien des données non vues ?)
+   \item Fidélité (À quel point l'explication approxime-t-elle la prédiction du modèle boîte noire ?)
+   \item Cohérence (À quel point l'explication diffère-t-elle entre les modèles formés sur la même tâche et produisant des prédictions similaires ? Deux modèles peuvent utiliser des variables différentes mais obtenir le même effet("Rashomon Effect")
+   \item Stabilité : À quel point les explications sont-elles similaires pour des instances similaires ?
+   \item Compréhensibilité : Dans quelle mesure les humains comprennent-ils les explications ?
+   \item Certitude : L'explication reflète-t-elle la certitude du modèle d'apprentissage automatique ?
+   \item Degré d'Importance : L'explication reflète-t-elle bien l'importance des caractéristiques ou des parties de l'explication ?
+   \item Représentativité : Combien d'instances une explication couvre-t-elle ?
+   \item Nouveauté : L'explication indique-t-elle si une instance de données à expliquer provient d'une "nouvelle" région éloignée de la distribution des données d'apprentissage ? Dans de tels cas, le modèle peut être imprécis et l'explication peut être inutile.
+\end{itemize}
+
+\subsection{Explications souhaitées pour les Humains :}
+
+Qu'est-ce qu'une bonne explication ?
+
+\begin{itemize}
+   \item Les explications sont \textbf{contrastées} : Les humains ne demandent généralement pas pourquoi une certaine prédiction a été faite, mais pourquoi cette prédiction a été faite plutôt qu'une autre.
+   \item Les explications sont \textbf{sélectives} : Les gens ne s'attendent pas à des explications couvrant la liste réelle et complète des causes d'un événement.
+   \item Les explications sont \textbf{sociales} : Elles font partie d'une conversation ou d'une interaction entre celui qui explique et le destinataire de l'explication.
+   \item Les explications se concentrent sur \textbf{l'anormal}.
+   \item Les explications sont \textbf{véridiques}. De bonnes explications s'avèrent être vraies.
+   \item Les bonnes explications sont \textbf{cohérentes} avec les croyances antérieures de celui qui reçoit l'explication.
+   \item Les bonnes explications sont \textbf{générales et probables} (à l'exception des cas qui présentent une anormalité influant sur le résultat).
+\end{itemize}
